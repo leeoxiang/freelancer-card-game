@@ -1,7 +1,12 @@
 const { promisify } = require("util");
 const redis = require("redis");
 
-const client = redis.createClient();
+// Support Railway's REDIS_URL or local development
+const redisConfig = process.env.REDIS_URL
+  ? process.env.REDIS_URL
+  : { host: 'localhost', port: 6379 };
+
+const client = redis.createClient(redisConfig);
 [
   "get",
   "set",
